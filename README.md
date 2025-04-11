@@ -15,7 +15,7 @@ It’s lightweight, educational, and perfect for exploring basic natural languag
 
 ---
 
-### ❓ How to use it (for pro)?
+### ❓ How to use it ?
 
 Replace the content of Text_A.txt to the artical written by author A, and Replace the content of Text_B.txt to the artical written by author B
 
@@ -23,8 +23,3 @@ Replace the content of Text.txt to the unknown text
 
 Then you can run the code.
 
----
-
-### ❓ How to use it (for beginner)?
-
-Please follow the video

@@ -17,9 +17,9 @@ It’s lightweight, educational, and perfect for exploring basic natural languag
 
 ### ❓ How to use it ?
 
-Replace the content of Text_A.txt to the artical written by author A, and Replace the content of Text_B.txt to the artical written by author B
+Replace the text of Text_A.txt to the artical written by author A, and replace the text of Text_B.txt to the artical written by author B
 
-Replace the content of Text.txt to the unknown text
+Replace the text of Text.txt to the unknown text
 
-Then you can run the code.
+Then you can run test.ipynb, input your beflief, and the moudel will return the probability of the artial is written by A and B respectively
 

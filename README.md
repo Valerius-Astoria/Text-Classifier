@@ -17,9 +17,10 @@ It’s lightweight, educational, and perfect for exploring basic natural languag
 
 ### ❓ How to use it ?
 
-Replace the text of Text_A.txt to the artical written by author A, and replace the text of Text_B.txt to the artical written by author B
+1.	Replace the contents of text_A.txt with a sample written by Author A
+2.	Replace the contents of text_B.txt with a sample written by Author B
+3.	Replace the contents of text.txt with the unknown text you want to classify
 
-Replace the text of Text.txt to the unknown text
-
-Then you can run test.ipynb, input your beflief, and the moudel will return the probability of the artial is written by A and B respectively
+Then simply run test.ipynb. The notebook will ask you to enter your prior belief (e.g., how likely you think the text is written by A — enter 0.5 if you’re unsure).
+📊 The model will then return the probabilities that the text was written by Author A and Author B, respectively.
 

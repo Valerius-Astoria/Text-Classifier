@@ -1,26 +1,55 @@
-# Text-Classifier
+# 📄 What Does It Do?
 
-### ❓ What is this?
-
-This is a simple Python-based authorship classifier that estimates the probability that a given piece of text was written by **Author A** or **Author B**.
-
-It uses a Naive Bayes-inspired approach based on **word frequency analysis**. You provide:
-- Two known writing samples (`text_A.txt` and `text_B.txt`)
-- One unknown text sample (`text.txt`)
-- Your prior belief (e.g., 0.5 if unsure)
-
-The script then calculates the likelihood of the text under each author's word distribution and uses **Bayes’ Theorem** to return a probability score.
-
-It’s lightweight, educational, and perfect for exploring basic natural language processing concepts like tokenization, smoothing, and probabilistic inference.
+This is a simple text classification model based on the **Multinomial Distribution** and **Bayes' Theorem**. It estimates the probability that a given article was written by **Author A** or **Author B**.
 
 ---
 
-### ❓ How to use it ?
+# ⚙️ How It Works
 
-1.	Replace the contents of text_A.txt with a sample written by Author A
-2.	Replace the contents of text_B.txt with a sample written by Author B
-3.	Replace the contents of text.txt with the unknown text you want to classify
+### 🧾 Inputs
 
-Then simply run test.ipynb. The notebook will ask you to enter your prior belief (e.g., how likely you think the text is written by A — enter 0.5 if you’re unsure).
-📊 The model will then return the probabilities that the text was written by Author A and Author B, respectively.
+The model takes **three inputs**:
+
+- `text_A.txt`: Sample text(s) known to be written by Author A  
+- `text_B.txt`: Sample text(s) known to be written by Author B  
+- `text.txt`: The unknown article to classify
+
+You will also be asked to input your **prior belief** \( P(A) \) — i.e., how likely you think the article is written by A (enter `0.5` if you're unsure).
+
+---
+
+### 🎲 Random Variables
+
+- **A**: The author is A  
+- **B**: The author is B  
+- **T**: The text is the one we want to classify
+
+---
+
+### 📐 Core Equation
+
+We compute the posterior odds ratio:
+
+$$
+\frac{P(A \mid T)}{P(B \mid T)} = \frac{P(T \mid A)}{P(T \mid B)} \cdot \frac{P(A)}{P(B)}
+$$
+
+Assuming a multinomial distribution for the text, we approximate:
+
+$$
+\frac{P(T \mid A)}{P(T \mid B)} =
+\frac{{p_1}^{c_1} \cdot {p_2}^{c_2} \cdots {p_m}^{c_m}}{{q_1}^{c_1} \cdot {q_2}^{c_2} \cdots {q_m}^{c_m}}
+$$
+
+Where:
+$p_i$: probability of word $i$ in Author A’s texts  
+$q_i$: probability of word $i$ in Author B’s texts  
+$c_i$: count of word $$ in the unknown text
+
+---
+
+### 🛡️ Handling Zero Probabilities
+
+If any $p_i$ or $q_i$ equals zero, the ratio breaks (division by zero or log of zero).  
+To avoid this, we apply **Laplace smoothing** — replacing zeros with a small constant $\epsilon$.
 

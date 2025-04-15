@@ -41,15 +41,64 @@ $$
 \frac{{p_1}^{c_1} \cdot {p_2}^{c_2} \cdots {p_m}^{c_m}}{{q_1}^{c_1} \cdot {q_2}^{c_2} \cdots {q_m}^{c_m}}
 $$
 
-Where:
+Where:  
 $p_i$: probability of word $i$ in Author A’s texts  
 $q_i$: probability of word $i$ in Author B’s texts  
-$c_i$: count of word $$ in the unknown text
+$c_i$: count of word $i$ in the unknown text
 
 ---
 
-### 🛡️ Handling Zero Probabilities
+### **🛡️ Handling Small Probabilities (Underflow)**
 
-If any $p_i$ or $q_i$ equals zero, the ratio breaks (division by zero or log of zero).  
-To avoid this, we apply **Laplace smoothing** — replacing zeros with a small constant $\epsilon$.
 
+
+When $p_i$ and $q_i$ are very small, multiplying many of them can lead to **floating-point underflow** — where the result is too tiny for the computer to represent accurately.
+
+
+
+To avoid this, we take the **logarithm of the likelihood ratio**:
+  
+
+$$
+\log \left( \frac{P(T \mid A)}{P(T \mid B)} \right) = \sum_{i} c_i \cdot \log \left( \frac{p_i}{q_i} \right)
+$$
+
+  
+
+Then, after summing in log space, we exponentiate to recover the original ratio:
+
+  
+$$
+\frac{P(T \mid A)}{P(T \mid B)} = \exp\left( \sum_i c_i \cdot \log \left( \frac{p_i}{q_i} \right) \right)
+$$
+  
+
+This is **numerically stable** and avoids underflow issues.
+
+---
+
+### **🛡️ Handling Extremely Large Ratios**
+
+  
+
+If the likelihood $ratio \frac{P(T \mid A)}{P(T \mid B)}$ becomes **extremely large or small**, it can lead to **numerical overflow** or cause instability in the final probability calculation.
+
+  
+
+To ensure stability, we **clip** the log-likelihood ratio to a reasonable range, such as:
+
+  
+$$
+logratio = \min(\max(logratio, -100), 100)
+$$
+  
+
+This keeps the final posterior probability well-defined:
+
+  
+$$
+P(A \mid T) = \frac{\exp(logratio) \cdot P(A)}{\exp(logratio) \cdot P(A) + P(B)}
+$$
+  
+
+This prevents the model from outputting probabilities of exactly 0 or 1 due to extreme ratios, and ensures **smoother, more interpretable results**.
